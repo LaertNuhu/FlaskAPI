@@ -3,5 +3,3 @@ sklearn
 networkx
 pandas
 nltk
-string
-unicodedata
