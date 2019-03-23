@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 import nltk
 import string
 import unicodedata
+nltk.download('punkt')
 
 
 class Normalizer:
