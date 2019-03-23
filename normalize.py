@@ -9,6 +9,7 @@ import string
 import unicodedata
 nltk.download('punkt')
 nltk.download('stopwords')
+nltk.download('wordnet')
 
 
 class Normalizer:
