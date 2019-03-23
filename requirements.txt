@@ -3,3 +3,4 @@ sklearn
 networkx
 pandas
 nltk
+gunicorn
