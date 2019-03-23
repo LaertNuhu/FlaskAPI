@@ -2,7 +2,6 @@ Flask
 sklearn
 networkx
 pandas
-xml
 nltk
 string
 unicodedata
