@@ -6,7 +6,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import networkx as nx
 from networkx.readwrite import json_graph
 import pandas as pd
-import functools
 from nltk.util import skipgrams
 from toolz import itertoolz, compose
 from toolz.curried import map as cmap, sliding_window, pluck
