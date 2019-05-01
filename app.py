@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from dataManipulation import XMLDataframeParser
 from normalize import Normalizer
@@ -7,7 +8,7 @@ from generateNetwork import NetworkGenerator as NG
 
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
+CORS(app)
 
 
 @app.route("/")
