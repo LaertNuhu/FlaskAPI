@@ -4,3 +4,5 @@ networkx
 pandas
 nltk
 gunicorn
+functools
+toolz
