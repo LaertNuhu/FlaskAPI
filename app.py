@@ -19,7 +19,7 @@ def hello():
 # lemmatization by the normalize function need to be implemented using a url parameter
 @app.route("/count/<int:edgeCount>")
 def getNodesByCount(edgeCount):
-    centrality = request.get("centrality")
+    centrality = request.args.get("centrality")
     if centrality:
         if centrality=="d":
             data = NG().generate(edgeCount,False,0,True)
@@ -32,7 +32,7 @@ def getNodesByCount(edgeCount):
 
 @app.route("/tfidf/<int:edgeCount>")
 def getNodesByTfidf(edgeCount):
-    centrality = request.get("centrality")
+    centrality = request.args.get("centrality")
     if centrality:
         if centrality=="d":
             data = NG().generate(edgeCount,True,0,True)
@@ -45,7 +45,7 @@ def getNodesByTfidf(edgeCount):
 
 @app.route("/count/skipgram/<int:edgeCount>")
 def getSkipgramsByCount(edgeCount):
-    centrality = request.get("centrality")
+    centrality = request.args.get("centrality")
     window_size = request.args.get('window_size')
     degree = False
     closeness= False
@@ -63,7 +63,7 @@ def getSkipgramsByCount(edgeCount):
 
 @app.route("/tfidf/skipgram/<int:edgeCount>")
 def getSkipgramsByTfidf(edgeCount):
-    centrality = request.get("centrality")
+    centrality = request.args.get("centrality")
     window_size = request.args.get('window_size')
     degree = False
     closeness= False
