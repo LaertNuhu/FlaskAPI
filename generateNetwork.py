@@ -9,10 +9,11 @@ import pandas as pd
 from nltk.util import skipgrams
 from toolz import itertoolz, compose
 from toolz.curried import map as cmap, sliding_window, pluck
+import community
 
 class NetworkGenerator:
 
-    def generate(self, edgeCount, tfidf = False, window_size = 0, degree = False, closeness = False):
+    def generate(self, edgeCount, tfidf = False, window_size = 0, degree = False, closeness = False, groups= False):
         parser = XMLDataframeParser()
         text = parser.getText("./data/smokingRecords.xml")
         parser.addFeatureFromText(text, "HISTORY OF PRESENT ILLNESS :", "", True, True, "illness")
@@ -35,20 +36,24 @@ class NetworkGenerator:
                 mostFreq2Grams = self.get_first_n_words(vectorizer, normalizer.normalizeArray(df_xml.illness, True, False), edgeCount)
         df_graph = self.create_dataframe(mostFreq2Grams)
         GF = nx.from_pandas_edgelist(df_graph, 'Node1', 'Node2', ["Weight"])
-        payload = json_graph.node_link_data(GF)
+        
 
         if degree:
             # calculate degree centrality
             degree_centrality = nx.degree_centrality(GF)
-            degree_centrality_json = {"degree_centrality":degree_centrality}
-            payload.update(degree_centrality_json)
-        
+            nx.set_node_attributes(GF, degree_centrality, "degree_centrality")
+            
         if closeness:
             # calculate closeness centrality    
             closeness_centrality = nx.closeness_centrality(GF) 
-            closeness_centrality_json = {"closeness_centrality":closeness_centrality}
-            payload.update(closeness_centrality_json)
+            nx.set_node_attributes(GF, closeness_centrality, "closeness_centrality")
 
+        if groups:
+            # calculate partitions
+            partition = community.best_partition(GF)
+            nx.set_node_attributes(GF, partition, "group")
+
+        payload = json_graph.node_link_data(GF)
         return payload
 
     def custom_analyser(self, token, n, k):
