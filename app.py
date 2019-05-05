@@ -20,62 +20,82 @@ def hello():
 @app.route("/count/<int:edgeCount>")
 def getNodesByCount(edgeCount):
     centrality = request.args.get("centrality")
-    if centrality:
-        if centrality=="d":
-            data = NG().generate(edgeCount,False,0,True)
-            return jsonify(data)
-        elif centrality=="c":
-            data = NG().generate(edgeCount,False,0,False,True)
-            return jsonify(data)
-    data = NG().generate(edgeCount)
-    return jsonify(data)
-
-@app.route("/tfidf/<int:edgeCount>")
-def getNodesByTfidf(edgeCount):
-    centrality = request.args.get("centrality")
-    if centrality:
-        if centrality=="d":
-            data = NG().generate(edgeCount,True,0,True)
-            return jsonify(data)
-        elif centrality=="c":
-            data = NG().generate(edgeCount,True,0,False,True)
-            return jsonify(data)
-    data = NG().generate(edgeCount,True)
-    return jsonify(data)
-
-@app.route("/count/skipgram/<int:edgeCount>")
-def getSkipgramsByCount(edgeCount):
-    centrality = request.args.get("centrality")
-    window_size = request.args.get('window_size')
+    groups = request.args.get("groups")
     degree = False
     closeness= False
+    getGroups = False
     if centrality:
         if centrality=="d":
             degree=True
         elif centrality=="c":
             closeness= True
+    if groups=="y":
+        getGroups = True
+    data = NG().generate(edgeCount,False,0,degree,closeness,getGroups)
+    return jsonify(data)
+
+@app.route("/tfidf/<int:edgeCount>")
+def getNodesByTfidf(edgeCount):
+    centrality = request.args.get("centrality")
+    groups = request.args.get("groups")
+    degree = False
+    closeness= False
+    getGroups = False
+    if centrality:
+        if centrality=="d":
+            degree=True
+        elif centrality=="c":
+            closeness= True
+    if groups=="y":
+        getGroups = True
+    data = NG().generate(edgeCount,True,0,degree,closeness,getGroups)
+    return jsonify(data)
+
+@app.route("/count/skipgram/<int:edgeCount>")
+def getSkipgramsByCount(edgeCount):
+    centrality = request.args.get("centrality")
+    groups = request.args.get("groups")
+    window_size = request.args.get('window_size')
+    degree = False
+    closeness= False
+    getGroups = False
+    if centrality:
+        if centrality=="d":
+            degree=True
+        elif centrality=="c":
+            closeness= True
+    
+    if groups=="y":
+        getGroups = True
+
     if window_size:
-        data = NG().generate(edgeCount,False,int(window_size),degree,closeness)
+        data = NG().generate(edgeCount,False,int(window_size),degree,closeness,getGroups)
     else:
-        data = NG().generate(edgeCount,False,1,degree,closeness)
+        data = NG().generate(edgeCount,False,1,degree,closeness,getGroups)
     
     return jsonify(data)
 
 @app.route("/tfidf/skipgram/<int:edgeCount>")
 def getSkipgramsByTfidf(edgeCount):
     centrality = request.args.get("centrality")
+    groups = request.args.get("groups")
     window_size = request.args.get('window_size')
     degree = False
     closeness= False
+    getGroups = False
     if centrality:
         if centrality=="d":
             degree=True
         elif centrality=="c":
             closeness= True
+    
+    if groups=="y":
+        getGroups = True
+
     if window_size:
-        data = NG().generate(edgeCount,True,int(window_size),degree,closeness)
+        data = NG().generate(edgeCount,True,int(window_size),degree,closeness,getGroups)
     else:
-        data = NG().generate(edgeCount,True,1,degree,closeness)
+        data = NG().generate(edgeCount,True,1,degree,closeness,getGroups)
     return jsonify(data)
 
 if __name__ == "__main__":
