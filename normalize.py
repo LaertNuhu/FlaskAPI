@@ -67,6 +67,7 @@ class Normalizer:
         tokens = self.removeStopWords(tokens)
         if lemmatizing:
             tokens = self.lemmatizeTokens(tokens)
+            tokens = self.lemmatizeVerbs(tokens)
         else:
             tokens = self.stemTokens(tokens)
         if POS:
@@ -86,6 +87,7 @@ class Normalizer:
             tokens = self.removeStopWords(tokens)
             if lemmatizing:
                 tokens = self.lemmatizeTokens(tokens)
+                tokens = self.lemmatizeVerbs(tokens)
             else:
                 tokens = self.stemTokens(tokens)
             if POS:
