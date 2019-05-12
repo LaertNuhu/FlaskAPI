@@ -85,7 +85,7 @@ This application can provide data which can be used by a application that uses D
 
 
 #### GetSkipgramsByCount
-* **URL:** `/tfidf/[threshold]/`
+* **URL:** `/count/skipgram/[threshold]/`
 
 * **Description**: Get the output of CountVectorizer using Skipgramms
 
@@ -126,7 +126,7 @@ This application can provide data which can be used by a application that uses D
 
 
 #### GetSkipgramsByTfidf
-* **URL:** `/tfidf/[threshold]/`
+* **URL:** `/tfidf/skipgram/[threshold]/`
 
 * **Description**: Get the output of TfidfVectorizer using Skipgramms
 
