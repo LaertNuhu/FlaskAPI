@@ -11,12 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/")
-def hello():
-    return "Hello"
-
-# code need to be clean -> vectorizers need to be put into a separate class
-# lemmatization by the normalize function need to be implemented using a url parameter
+# returns graph data where the edge weights are equal to the 2-grams count
 @app.route("/count/<int:edgeCount>")
 def getNodesByCount(edgeCount):
     centrality = request.args.get("centrality")
@@ -34,6 +29,7 @@ def getNodesByCount(edgeCount):
     data = NG().generate(edgeCount,False,0,degree,closeness,getGroups)
     return jsonify(data)
 
+# returns graph data where the edge weights are equal to the 2-grams tfidf
 @app.route("/tfidf/<int:edgeCount>")
 def getNodesByTfidf(edgeCount):
     centrality = request.args.get("centrality")
@@ -51,6 +47,7 @@ def getNodesByTfidf(edgeCount):
     data = NG().generate(edgeCount,True,0,degree,closeness,getGroups)
     return jsonify(data)
 
+# returns graph data where the edge weights are equal to the skipgrams count
 @app.route("/count/skipgram/<int:edgeCount>")
 def getSkipgramsByCount(edgeCount):
     centrality = request.args.get("centrality")
@@ -75,6 +72,7 @@ def getSkipgramsByCount(edgeCount):
     
     return jsonify(data)
 
+# returns graph data where the edge weights are equal to the skipgrams tfidf
 @app.route("/tfidf/skipgram/<int:edgeCount>")
 def getSkipgramsByTfidf(edgeCount):
     centrality = request.args.get("centrality")
